@@ -8,7 +8,11 @@ namespace PeopleViewer
     {
         public static IPersonRepository GetRepository()
         {
-            throw new NotImplementedException();
+            string typeName = ConfigurationManager.AppSettings["RepositoryType"];
+            Type repoType = Type.GetType(typeName);
+            object repoInstance = Activator.CreateInstance(repoType);
+            IPersonRepository repo = repoInstance as IPersonRepository;
+            return repo;
         }
     }
 }
